@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Manager</title>
+    <link rel="stylesheet" href="/static/mainhtml.css">
+</head>
+<body>
+    <header>
+        <h1>Password Manager</h1>
+        <nav>
+            {% if current_user %}
+                <p>Welcome, {{ current_user.username }}!</p>
+                <form action="/logout" method="POST">
+                    <button type="submit">Logout</button>
+                </form>
+                <form action="/add" method="GET">
+                    <button type="submit">Add account</button>
+                </form>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Saved Accounts</h2>
+            <ul>
+                {% if current_user %}
+                    {% for account in accounts %}
+                        <li>{{ account.account_name }} - {{ account.account_website }} 
+                            <form action="/edit/{{account.account_id}}" method="GET">
+                                <button type="submit">Edit</button> 
+                            </form>
+                            <form action="/delete/{{account.account_id}}" method="GET">
+                                <button type="submit">Delete</button> 
+                            </form>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <p>Please login to view your saved accounts.</p>
+                {% endif %}
+            </ul>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 Password Manager</p>
+    </footer>
+</body>
+</html>

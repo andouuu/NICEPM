@@ -1,0 +1,19 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/acc_data_table.css">
+</head>
+<table>
+<tr>
+    <td>Username:</td><td><input type="text" name="account_name" {% if account is defined %}value="{{account.account_name}}"{% endif %}></td>
+</tr>
+<tr>
+    <td>Password:</td><td><input type="text" name="account_password" {% if account is defined %}value="{{account.account_password}}"{% endif %}></td>
+</tr>
+<tr>
+    <td>Website:</td><td><input type="text" name="account_website" {% if account is defined %}value="{{account.account_website}}"{% endif %}></td>
+</tr>
+<tr>
+    <td></td><td><input type="submit" value="Save"></td>
+</tr>
+</table>

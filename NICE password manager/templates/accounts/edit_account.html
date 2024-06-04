@@ -1,0 +1,17 @@
+{% extends "accounts/base.html" %}
+{% block html_head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="/static/edit_account.css">
+{% endblock %}
+{% block html_body %}
+    <h2>Edit account</h2>
+    {% if account_updated is defined %}
+        <p>
+            Record updated for:<br>
+            {{account_updated.account_name}} {{account_updated.account_name}} with account ID: {{account_updated.account_id}}
+        </p>
+    {% endif %}
+    <form id="account_data" method="post" action="{{ url_for( 'edit_account', account_id=account.account_id ) }}">
+        {% include "accounts/acc_data_table.html" %}
+    </form>
+{% endblock %}

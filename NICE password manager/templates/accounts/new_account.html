@@ -1,0 +1,16 @@
+{% extends "accounts/base.html" %}
+{% block html_head %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="/static/new_account.css">
+{% endblock %}
+{% block html_body %}
+<h2>Add account</h2>
+{% if account_added is defined %}
+<p>
+    {{account_added.account_name}} {{account_added.account_password}}
+</p>
+{% endif %}
+<form id="account_data" method="post" action="/add">
+    {% include "accounts/acc_data_table.html" %}
+</form>
+{% endblock %}

@@ -1,0 +1,170 @@
+openapi: 3.0.0
+info:
+  title: Password Manager API
+  description: API for managing usernames and passwords
+  version: 1.0.0
+servers:
+  - url: "/api"
+paths:
+  /add-account:
+    post:
+      operationId: passmanager.create
+      summary: Add username and password for a website
+      description: Endpoint to add a new account with username and password.
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              x-body-name: "account"
+              $ref: '#/components/schemas/Account'
+      responses:
+        '201':
+          description: Account successfully added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+
+  /change-details/{id}:
+    put:
+      operationId: passmanager.update
+      summary: Change username or password for a certain account
+      description: Endpoint to change the username or password for a specific account.
+      tags:
+        - user
+      parameters:
+        - name: id
+          in: path
+          description: ID of the account to change details
+          required: true
+          schema:
+            type: integer
+            example: 10000    
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              x-body-name: "account"
+              $ref: '#/components/schemas/Account'
+      responses:
+        '201':
+          description: Account details successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Account'
+
+  /delete-data/{account_id}:
+    delete:
+      operationId: passmanager.delete
+      summary: Delete data for a certain account
+      description: Endpoint to delete the data for a specific account.
+      tags:
+        - user
+      parameters:
+        - name: account_id
+          in: path
+          description: ID of the account to delete
+          required: true
+          schema:
+            type: integer
+            example: 10000
+      responses:
+        '204':
+          description: Account successfully deleted
+
+  /saved-accounts:
+    get:
+      operationId: passmanager.read_all
+      summary: See all saved accounts
+      description: Endpoint to retrieve all saved accounts.
+      tags:
+        - user
+      parameters:
+        - name: user_id
+          in: query
+          schema:
+            type: integer
+          required: true
+      responses:
+        '200':
+          description: List of saved accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Account'
+  /saved-accounts/{account_id}:
+    get:
+      operationId: passmanager.read_one
+      tags:
+        - Account
+      summary: "Read one account"
+      parameters:
+        - name: account_id
+          in: path
+          description: ID of the account
+          required: true
+          schema:
+            type: integer
+            example: 10000
+      responses:
+        "200":
+          description: "Successfully read account"
+        "404":
+          description: "Not found"
+
+  
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - username
+        - password
+        - email
+      properties:
+        id:
+          type: integer
+          example: 999999
+        username:
+          type: string
+          example: randomuser
+        password:
+          type: string
+          example: heoas!241@
+        email:
+          type: string
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+          example: []
+    Account:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        id:
+          type: integer
+          example: 10000
+        username:
+          type: string
+          example: randomname
+        password:
+          type: string
+          format: unicode
+          example: hre23f$A
+        website:
+          type: string
+          format: url
+          example: 'amazon.com'
+        account_user_id:
+          type: integer
+          example: 100000
